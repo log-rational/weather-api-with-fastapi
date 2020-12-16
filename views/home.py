@@ -1,19 +1,16 @@
 import fastapi
-from fastapi import templating
-from fastapi.templating import JinJinja2Templates
+from fastapi.routing import APIRouter
+from fastapi.templating import Jinja2Templates
 import uvicorn
+from fastapi.requests import Request
 
-template = JinJinja2Templates()
+templates = Jinja2Templates('templates')
 
-api = fastapi.FastAPI()
-
-
-@api.get('/')
-def index():
-    return {
-        "message": "Hello World!",
-        "status": "OK"
-    }
+router = APIRouter()
 
 
-uvicorn.run(api)
+@router.get('/', include_in_schema=False)
+def index(request: Request):
+    return templates.TemplateResponse('index.html', {
+        'request': request
+    })

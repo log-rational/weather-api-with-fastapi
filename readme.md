@@ -5,3 +5,5 @@
 - fastapi
 - uvicorn
 - jinja2
+- pydantic
+- httpx
